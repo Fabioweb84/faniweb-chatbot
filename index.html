@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Faniweb Chatbot Alpha</title>
+  <!-- BotUI CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css"/>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f4f7f8; margin: 0; padding: 1rem; }
-    .chat-container { max-width: 600px; margin: auto; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-    .message { display: flex; margin: 0.5rem 0; }
-    .bot { justify-content: flex-start; }
-    .user { justify-content: flex-end; }
-    .bubble { max-width: 70%; padding: 0.75rem 1rem; border-radius: 16px; }
-    .bot .bubble { background-color: #e2e8f0; color: #1a202c; border-bottom-left-radius: 0; }
-    .user .bubble { background-color: #3182ce; color: #fff; border-bottom-right-radius: 0; }
-    .templates { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin: 1rem 0; }
-    .template-img { width: 30%; max-width: 160px; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
-    @media (max-width: 480px) {
-      .templates { flex-direction: column; align-items: center; }
-      .template-img { width: 80%; }
-    }
+    body { margin:0; background:#f4f7f8; font-family:Arial,sans-serif }
+    #botui-app { max-width:600px; margin:2rem auto; }
   </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div class="message bot"><div class="bubble">Salut et bienvenue chez Faniweb ! Je t’aide à créer ton site pro en 1 minute.</div></div>
-    <div class="message bot"><div class="bubble">🔍 Quel est ton secteur d’activité ?</div></div>
-    <div class="message user"><div class="bubble">Coach</div></div>
-    <div class="message bot"><div class="bubble">🎨 Super ! Quel style de site souhaites-tu ? (Épuré & Moderne)</div></div>
-    <div class="message user"><div class="bubble">Épuré & Moderne</div></div>
-    <div class="message bot"><div class="bubble">📂 Choisis un template :</div></div>
-    <div class="templates">
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Coach+Pro" alt="Template Coach Pro"/>
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Avocat+Classique" alt="Template Avocat Classique"/>
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Artisan+Chic" alt="Template Artisan Chic"/>
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Restaurant+Gastronomique" alt="Template Restaurant Gastronomique"/>
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Consultant+Business" alt="Template Consultant Business"/>
-      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Artiste+Creative" alt="Template Artiste Creative"/>
-    </div>
-    <div class="message bot"><div class="bubble">✅ Génial ! Nous préparons ton aperçu IA sur mesure maintenant. → [Preview en préparation]</div></div>
+  <div id="botui-app">
+    <bot-ui></bot-ui>
   </div>
+
+  <!-- BotUI JS -->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.min.js"></script>
+  <script>
+    const botui = new BotUI('botui-app');
+
+    async function runChat() {
+      await botui.message.bot({ content: 'Salut et bienvenue chez Faniweb ! Je t’aide à créer ton site pro en 1 minute.' });
+      await botui.message.bot({ content: '🔍 Quel est ton secteur d’activité ?' });
+      const sector = await botui.action.text({ action: { placeholder: 'Ex : Coach, Avocat…' } });
+      await botui.message.user({ content: sector.value });
+      await botui.message.bot({ content: '🎨 Super ! Quel style souhaites-tu ? (Épuré & Moderne, Coloré, Classique…)' });
+      const style = await botui.action.text({ action: { placeholder: 'Épuré & Moderne' } });
+      await botui.message.user({ content: style.value });
+      await botui.message.bot({ content: '📂 Choisis un template :' });
+      const tmpl = await botui.action.button({
+        action: [
+          { text: 'Coach Pro', value: 'Coach Pro', icon: '💼' },
+          { text: 'Avocat Classique', value: 'Avocat Classique', icon: '⚖️' },
+          { text: 'Artisan Chic', value: 'Artisan Chic', icon: '🔨' },
+          { text: 'Restaurant Gastronomique', value: 'Restaurant Gastronomique', icon: '🍽️' },
+          { text: 'Consultant Business', value: 'Consultant Business', icon: '📊' },
+          { text: 'Artiste Creative', value: 'Artiste Creative', icon: '🎨' }
+        ]
+      });
+      await botui.message.user({ content: tmpl.value });
+      // Afficher un aperçu visuel simple
+      await botui.message.bot({ content: 'Voici un aperçu du template choisi :' });
+      await botui.message.bot({
+        type: 'html',
+        content: `<img style="max-width:100%;border-radius:8px;margin:1rem 0" src="https://via.placeholder.com/300x180.png?text=${encodeURIComponent(tmpl.value)}" alt="${tmpl.value}">`
+      });
+      await botui.message.bot({ content: '✅ Génial ! Nous préparons ton aperçu IA sur mesure maintenant. → [Preview en préparation]' });
+    }
+
+    runChat();
+  </script>
 </body>
 </html>
