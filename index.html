@@ -1,34 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Faniweb - Chatbot Alpha</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f8; margin: 0; padding: 2rem; }
-        .chatbox { max-width: 600px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
-        .message { margin-bottom: 1.5rem; }
-        .bot { font-weight: bold; color: #333; }
-        .user { font-weight: bold; color: #1a73e8; margin-left: 20px; }
-        img { width: 100%; max-width: 250px; margin-top: 1rem; border-radius: 8px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faniweb Chatbot Alpha</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f4f7f8; margin: 0; padding: 1rem; }
+    .chat-container { max-width: 600px; margin: auto; background: #fff; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .message { display: flex; margin: 0.5rem 0; }
+    .bot { justify-content: flex-start; }
+    .user { justify-content: flex-end; }
+    .bubble { max-width: 70%; padding: 0.75rem 1rem; border-radius: 16px; }
+    .bot .bubble { background-color: #e2e8f0; color: #1a202c; border-bottom-left-radius: 0; }
+    .user .bubble { background-color: #3182ce; color: #fff; border-bottom-right-radius: 0; }
+    .templates { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin: 1rem 0; }
+    .template-img { width: 30%; max-width: 160px; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+    @media (max-width: 480px) {
+      .templates { flex-direction: column; align-items: center; }
+      .template-img { width: 80%; }
+    }
+  </style>
 </head>
 <body>
-    <div class="chatbox">
-        <div class="message bot">Salut et bienvenue chez Faniweb !</div>
-        <div class="message bot">Quel est ton secteur d’activité ?</div>
-        <div class="message user">Coach</div>
-        <div class="message bot">Super ! Quel style de site préfères-tu ?</div>
-        <div class="message user">Épuré et moderne</div>
-        <div class="message bot">Voici quelques templates que nous proposons :</div>
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Coach" alt="Template Coach">
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Avocat" alt="Template Avocat">
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Artisan" alt="Template Artisan">
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Restaurant" alt="Template Restaurant">
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Consultant" alt="Template Consultant">
-        <img src="https://via.placeholder.com/250x150.png?text=Template+Artiste" alt="Template Artiste">
-        <div class="message bot">Merci ! Nous allons générer ton site sur mesure avec l’IA.</div>
+  <div class="chat-container">
+    <div class="message bot"><div class="bubble">Salut et bienvenue chez Faniweb ! Je t’aide à créer ton site pro en 1 minute.</div></div>
+    <div class="message bot"><div class="bubble">🔍 Quel est ton secteur d’activité ?</div></div>
+    <div class="message user"><div class="bubble">Coach</div></div>
+    <div class="message bot"><div class="bubble">🎨 Super ! Quel style de site souhaites-tu ? (Épuré & Moderne)</div></div>
+    <div class="message user"><div class="bubble">Épuré & Moderne</div></div>
+    <div class="message bot"><div class="bubble">📂 Choisis un template :</div></div>
+    <div class="templates">
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Coach+Pro" alt="Template Coach Pro"/>
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Avocat+Classique" alt="Template Avocat Classique"/>
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Artisan+Chic" alt="Template Artisan Chic"/>
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Restaurant+Gastronomique" alt="Template Restaurant Gastronomique"/>
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Consultant+Business" alt="Template Consultant Business"/>
+      <img class="template-img" src="https://via.placeholder.com/200x120.png?text=Artiste+Creative" alt="Template Artiste Creative"/>
     </div>
+    <div class="message bot"><div class="bubble">✅ Génial ! Nous préparons ton aperçu IA sur mesure maintenant. → [Preview en préparation]</div></div>
+  </div>
 </body>
 </html>
